@@ -1,0 +1,61 @@
+<header class="flex">
+  <h1>Angular users task</h1>
+</header>
+<hr />
+<div class="container">
+  <div class="form">
+    <p>Login</p>
+    <input type="text" placeholder="Enter login" [(ngModel)]="newName" />
+    <p class="password_p">Password</p>
+    <input type="text" placeholder="Enter password" [(ngModel)]="newPass" />
+    <p class="email_p">Email Address</p>
+    <input type="text" placeholder="Enter email" [(ngModel)]="newEmail" />
+
+    <input
+      *ngIf="!editStatus"
+      type="button"
+      value="add"
+      (click)="addUser()"
+      [disabled]="!newName && !newPass"
+      class="user__btn"
+    />
+    <input
+      *ngIf="editStatus"
+      type="button"
+      value="Save edit user"
+      (click)="saveEditUser()"
+      [disabled]="!newName"
+      class="user__btn btn-save"
+    />
+  </div>
+  <table class="info" id="info">
+    <tbody id="tbody">
+      <tr class="titles" id="titles">
+        <th>#</th>
+        <th>Login</th>
+        <th>Password</th>
+        <th>Email</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      <ng-container *ngIf="arrUsers.length > 0">
+        <tr *ngFor="let obj of arrUsers; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ obj.name }}</td>
+          <td>{{ obj.password }}</td>
+          <td>{{ obj.email }}</td>
+          <td><button (click)="editUser(i)" class="edit">Edit</button></td>
+          <td>
+            <button
+              (click)="deleteUser(i)"
+              class="delete"
+              [disabled]="editStatus"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
